@@ -24,7 +24,7 @@ const ContactListItem = () => {
     notifyDeleteContact();
   };
 
-  return filtredContacts.map(({ id, name, phone }) => {
+  return filtredContacts.sort((a, b) => a.name.localeCompare(b.name)).map(({ id, name, phone }) => {
     return (
       <Item key={id}>
         <Contact>

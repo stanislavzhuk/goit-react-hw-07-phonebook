@@ -1,21 +1,29 @@
-import React from 'react';
-import { Triangle } from 'react-loader-spinner';
+import { useEffect } from "react";
+import { createPortal } from "react-dom";
+import loader from '../../images/loader.gif'
 import css from './Loader.module.css';
 
-const Loader = () => {
-  return (
-    <div className={css.loader}>
-      <Triangle
-        height="150"
-        width="150"
-        color="#3f51b5"
-        ariaLabel="triangle-loading"
-        wrapperStyle={{}}
-        wrapperClass=""
-        visible={true}
+const root4Loader = document.querySelector('#loader');
+
+const Loader = ({ size = 100}) => {
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  });
+
+  return createPortal(
+    <div className={css.overlay}>
+      <img
+        src={loader}
+        alt="loading..."
+        width={size}
+        className={css.loader}
       />
-    </div>
-  )
+    </div>,
+    root4Loader
+  );
 };
 
 export default Loader;
