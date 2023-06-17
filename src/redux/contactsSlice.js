@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addContactsThunk, deleteContactsThunk, getContactsThunk } from './contactsThunk';
+import { addContactThunk, deleteContactThunk, fetchContactsThunk } from './contactsThunk';
 
 
 const initialState = {
@@ -23,25 +23,25 @@ const contactsSlice = createSlice({
   initialState,
   extraReducers: builder => {
     builder
-      .addCase(getContactsThunk.pending, handlePending)
-      .addCase(getContactsThunk.rejected, handleRejected)
-      .addCase(getContactsThunk.fulfilled, (state, { payload }) => {
+      .addCase(fetchContactsThunk.pending, handlePending)
+      .addCase(fetchContactsThunk.rejected, handleRejected)
+      .addCase(fetchContactsThunk.fulfilled, (state, { payload }) => {
         state.isLoading = false;
         state.items = payload;
       })
-      .addCase(addContactsThunk.pending, handlePending)
-      .addCase(addContactsThunk.rejected, handleRejected)
-      .addCase(addContactsThunk.fulfilled, (state, { payload }) => {
+      .addCase(addContactThunk.pending, handlePending)
+      .addCase(addContactThunk.rejected, handleRejected)
+      .addCase(addContactThunk.fulfilled, (state, { payload }) => {
         state.isLoading = false;
         state.items.push(payload);
       })
-      .addCase(deleteContactsThunk.pending, handlePending)
-      .addCase(deleteContactsThunk.rejected, handleRejected)
-      .addCase(deleteContactsThunk.fulfilled, (state, { payload }) => {
+      .addCase(deleteContactThunk.pending, handlePending)
+      .addCase(deleteContactThunk.rejected, handleRejected)
+      .addCase(deleteContactThunk.fulfilled, (state, { payload }) => {
         state.isLoading = false;
         state.items = state.items.filter(item => item.id !== payload.id);
       });
-  },
+  },fetch
 });
 
 export const contactsReducer = contactsSlice.reducer;

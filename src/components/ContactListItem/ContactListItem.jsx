@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectContacts, selectFilter } from 'redux/selectors';
-import { deleteContactsThunk } from 'redux/contactsThunk';
+import { deleteContactThunk } from 'redux/contactsThunk';
 import { notifyDeleteContact } from 'services/notify';
 import { Item, Button, Contact } from './ContactListItem.styled';
 
@@ -20,7 +20,7 @@ const ContactListItem = () => {
   const filtredContacts = filterByName(normalizedFilter);
 
   const onDelete = (id) => {
-    dispatch(deleteContactsThunk(id));
+    dispatch(deleteContactThunk(id));
     notifyDeleteContact();
   };
 
