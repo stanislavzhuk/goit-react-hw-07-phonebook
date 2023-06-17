@@ -6,19 +6,19 @@ const contactsAPI = axios.create({
 
 export const getContacts = async () => {
   const { data } = await contactsAPI.get('contacts');
-  console.log('Отримані контакти:', data);
+  // console.log('Received contacts:', data);
   return data;
 };
 
 export const addContacts = async contact => {
   const { data } = await contactsAPI.post('contacts', contact);
-  console.log('Доданий контакт:', data);
+  // console.log('Contact added:', data);
   return data;
 };
 
 export const deleteContacts = async id => {
-  console.log('ID контакту для видалення:', id);
+  // console.log('Contact ID to delete:', id);
   const { data } = await contactsAPI.delete(`contacts/${id}`);
-  console.log('Видалений контакт:', data);
+  // console.log('Contact deleted:', data);
   return data;
 };
