@@ -11,7 +11,7 @@ export const Contact = styled.p`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: black;
+  color: #000;
   `;
 
 export const Button = styled.button`
