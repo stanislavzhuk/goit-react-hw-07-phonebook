@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { Form, Label, Input, Button } from "./ContactForm.styled";
 import { useDispatch, useSelector } from 'react-redux';
-import { getContacts } from 'redux/selectors';
-import { addContact } from 'redux/contactsSlice';
+import { selectContacts } from 'redux/selectors';
 import { notifyAddContacts, notifyCheckContacts } from 'services/notify';
+import { addContactsThunk } from 'redux/contactsThunk';
 
 const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const dispatch = useDispatch();
-  const contacts = useSelector(getContacts);
+  const contacts = useSelector(selectContacts);
 
   const onChange = e => {
     const { name, value } = e.currentTarget;
@@ -26,7 +26,7 @@ const ContactForm = () => {
     e.preventDefault();
     if (contacts.some(contact => contact.name.toLowerCase() === name.toLowerCase())) return notifyCheckContacts(name);
     
-    dispatch(addContact(name, number));
+    dispatch(addContactsThunk(name, number));
     notifyAddContacts(name);
     reset();
   };

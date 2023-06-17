@@ -1,14 +1,14 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getContacts, getFilter } from 'redux/selectors';
-import { deleteContact } from 'redux/contactsSlice';
+import { selectContacts, selectFilter } from 'redux/selectors';
 import { notifyDeleteContact } from 'services/notify';
 import { Item, Button, Contact } from './ContactListItem.styled';
+import { deleteContactsThunk } from 'redux/contactsThunk';
 
 const ContactListItem = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(getContacts);
-  const filter = useSelector(getFilter);
+  const contacts = useSelector(selectContacts);
+  const filter = useSelector(selectFilter);
   const filterByName = filter => {
     return contacts.filter(contact =>
       contact.name.toLowerCase().includes(filter)
@@ -19,7 +19,7 @@ const ContactListItem = () => {
   const filtredContacts = filterByName(normalizedFilter);
 
   const onDelete = (id) => {
-    dispatch(deleteContact(id));
+    dispatch(deleteContactsThunk(id));
     notifyDeleteContact();
   };
 

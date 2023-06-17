@@ -1,42 +1,47 @@
-import { createSlice, nanoid } from '@reduxjs/toolkit';
-import { persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+import { createSlice } from '@reduxjs/toolkit';
+import { addContactsThunk, deleteContactsThunk, getContactsThunk } from './contactsThunk';
 
-const persistConfig = {
-  key: 'contacts',
-  storage,
-}
+
+const initialState = {
+  items: [],
+  isLoading: false,
+  error: null,
+};
+
+const handlePending = state => {
+  state.isLoading = true;
+  state.error = null;
+};
+
+const handleRejected = (state, { payload }) => {
+  state.isLoading = false;
+  state.error = payload;
+};
 
 const contactsSlice = createSlice({
   name: 'contacts',
-  initialState: {
-    contacts: [],
-    filter: '',
-  },
-  reducers: {
-    addContact: {
-      reducer(state, action) {
-        state.contacts.push(action.payload);
-      },
-      prepare(name, number) {
-        return {
-          payload: {
-            name,
-            number,
-            id: nanoid(),
-          },
-        };
-      },
-    },
-    deleteContact: (state, action) => {
-      state.contacts = state.contacts.filter(contact => contact.id !== action.payload);
-    },
-    updateFilter: (state, action) => {
-      state.filter = action.payload;
-    },
+  initialState,
+  extraReducers: builder => {
+    builder
+      .addCase(getContactsThunk.pending, handlePending)
+      .addCase(getContactsThunk.rejected, handleRejected)
+      .addCase(getContactsThunk.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.items = payload;
+      })
+      .addCase(addContactsThunk.pending, handlePending)
+      .addCase(addContactsThunk.rejected, handleRejected)
+      .addCase(addContactsThunk.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.items.push(payload);
+      })
+      .addCase(deleteContactsThunk.pending, handlePending)
+      .addCase(deleteContactsThunk.rejected, handleRejected)
+      .addCase(deleteContactsThunk.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.items = state.items.filter(item => item.id !== payload.id);
+      });
   },
 });
 
-export const { addContact, deleteContact, updateFilter } = contactsSlice.actions;
-
-export const contactsReducer = persistReducer(persistConfig, contactsSlice.reducer);
+export const contactsReducer = contactsSlice.reducer;

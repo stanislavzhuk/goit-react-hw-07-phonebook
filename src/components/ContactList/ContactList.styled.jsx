@@ -9,7 +9,7 @@ export const List = styled.ul`
   font-size: 18px;
   font-weight: 500;
   line-height: 1.14;
-
+  overflow: auto;
 
   border: 2px solid #a75f06;
   border-radius: 8px;
@@ -22,5 +22,9 @@ export const List = styled.ul`
   &:hover,
   &:focus {
     outline-color: #f5b05c;
+  }
+
+  &::-webkit-scrollbar {
+    width: 0;
   }
   `;
