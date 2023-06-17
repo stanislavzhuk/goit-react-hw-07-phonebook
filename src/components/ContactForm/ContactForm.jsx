@@ -26,7 +26,7 @@ const ContactForm = () => {
     e.preventDefault();
     if (contacts.some(contact => contact.name.toLowerCase() === name.toLowerCase())) return notifyCheckContacts(name);
     
-    dispatch(addContactsThunk(name, number));
+    dispatch(addContactsThunk({ name, phone: number }));
     notifyAddContacts(name);
     reset();
   };

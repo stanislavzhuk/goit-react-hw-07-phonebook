@@ -12,6 +12,7 @@ export const Contact = styled.p`
   overflow: hidden;
   text-overflow: ellipsis;
   color: #000;
+  line-height: calc(24 / 18);
   `;
 
 export const Button = styled.button`
