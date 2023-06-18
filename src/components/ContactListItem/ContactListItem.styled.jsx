@@ -5,9 +5,44 @@ export const Item = styled.li`
   align-items: baseline;
   justify-content: space-between;
   gap: 8px;
+
+  &:not(:last-child) {
+    margin-bottom: 8px;
+  }
+
+  @media screen and (min-width: 768px) {
+    &:not(:last-child) {
+      margin-bottom: 0;
+    }
+  }
+`;
+
+export const Contact = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-width: 140px;
+
+  @media screen and (min-width: 376px) {
+    max-width: 300px;
+  }
+
+  @media screen and (min-width: 768px) {
+    flex-direction: row;
+    gap: 8px;
+    max-width: 600px;
+  }
   `;
 
-export const Contact = styled.p`
+export const Name = styled.p`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #000;
+  line-height: calc(24 / 18);
+  `;
+
+export const Phone = styled.p`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
